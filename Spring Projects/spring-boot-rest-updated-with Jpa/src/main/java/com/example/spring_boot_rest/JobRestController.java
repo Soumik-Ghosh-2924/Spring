@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -30,6 +31,11 @@ public class JobRestController
         return service.getJob(postId);
     }
 
+    @GetMapping("jobPosts/keyword/{keyword}")
+    public List<JobPost> search(@PathVariable("keyword") String keyword)
+    {
+        return service.search(keyword);
+    }
 
     @PostMapping("jobPost")
     public void addJob(@RequestBody JobPost jobPost)
@@ -50,6 +56,14 @@ public class JobRestController
     {
         service.deleteJob(postId);
         return "Deleted";
+    }
+
+    @GetMapping("load")
+    public String loadData()
+    {
+        service.loadData();
+
+        return "success";
     }
 
 }
